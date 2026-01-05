@@ -13,25 +13,13 @@ use Symfony\Component\Form\FormTypeInterface;
  */
 class Step implements StepInterface {
 
-	/**
-	 * @var int
-	 */
-	protected $number;
+	protected int $number;
 
-	/**
-	 * @var string|StepLabel|null
-	 */
-	protected $label = null;
+	protected string|null|StepLabel $label = null;
 
-	/**
-	 * @var FormTypeInterface|string|null
-	 */
-	protected $formType = null;
+	protected string|FormTypeInterface|null $formType = null;
 
-	/**
-	 * @var array
-	 */
-	protected $formOptions = [];
+	protected array $formOptions = [];
 
 	/**
 	 * @var callable|null
@@ -39,11 +27,12 @@ class Step implements StepInterface {
 	private $skipFunction = null;
 
 	/**
-	 * @var bool|null Is only null if not yet evaluated.
+	 * Is only null if not yet evaluated.
 	 */
-	private $skipped = false;
+	private ?bool $skipped = false;
 
-	public static function createFromConfig($number, array $config) {
+	public static function createFromConfig($number, array $config): static
+    {
 		$step = new static();
 
 		$step->setNumber($number);
@@ -72,10 +61,8 @@ class Step implements StepInterface {
 		return $step;
 	}
 
-	/**
-	 * @param int $number
-	 */
-	public function setNumber($number) {
+	public function setNumber(int $number): void
+    {
 		if (is_int($number)) {
 			$this->number = $number;
 
@@ -88,14 +75,13 @@ class Step implements StepInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getNumber() {
+	public function getNumber(): int
+    {
 		return $this->number;
 	}
 
-	/**
-	 * @param string|StepLabel|null $label
-	 */
-	public function setLabel($label) {
+	public function setLabel(StepLabel|string|null $label): void
+    {
 		if (is_string($label)) {
 			$this->label = StepLabel::createStringLabel($label);
 
@@ -114,7 +100,8 @@ class Step implements StepInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getLabel() {
+	public function getLabel(): callable|string|null
+    {
 		try {
 			return $this->label !== null ? $this->label->getText() : null;
 		} catch (StepLabelCallableInvalidReturnValueException $e) {
@@ -124,10 +111,10 @@ class Step implements StepInterface {
 	}
 
 	/**
-	 * @param FormTypeInterface|string|null $formType
 	 * @throws InvalidTypeException
 	 */
-	public function setFormType($formType) {
+	public function setFormType(FormTypeInterface|string|null $formType): void
+    {
 		if ($formType === null || is_string($formType) || $formType instanceof FormTypeInterface) {
 			$this->formType = $formType;
 
@@ -140,14 +127,13 @@ class Step implements StepInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getFormType() {
+	public function getFormType(): FormTypeInterface|string|null
+    {
 		return $this->formType;
 	}
 
-	/**
-	 * @param array $formOptions
-	 */
-	public function setFormOptions($formOptions) {
+	public function setFormOptions(array $formOptions): void
+    {
 		if (is_array($formOptions)) {
 			$this->formOptions = $formOptions;
 
@@ -160,15 +146,17 @@ class Step implements StepInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getFormOptions() {
+	public function getFormOptions(): array
+    {
 		return $this->formOptions;
 	}
 
 	/**
-	 * @param bool|callable $skip
+	 * @param callable|bool $skip
 	 * @throws InvalidTypeException
 	 */
-	public function setSkip($skip) {
+	public function setSkip(callable|bool $skip): void
+    {
 		if (is_bool($skip)) {
 			$this->skipFunction = null;
 			$this->skipped = $skip;
@@ -189,7 +177,8 @@ class Step implements StepInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function evaluateSkipping($estimatedCurrentStepNumber, FormFlowInterface $flow) {
+	public function evaluateSkipping($estimatedCurrentStepNumber, FormFlowInterface $flow): void
+    {
 		if ($this->skipFunction !== null) {
 			$returnValue = ($this->skipFunction)(...[$estimatedCurrentStepNumber, $flow]);
 
@@ -205,7 +194,8 @@ class Step implements StepInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isSkipped() {
+	public function isSkipped(): bool
+    {
 		return $this->skipped === true;
 	}
 

@@ -11,7 +11,7 @@ use Craue\FormFlowBundle\Form\FormFlow;
  */
 class Issue87Flow extends FormFlow {
 
-	protected $allowDynamicStepNavigation = true;
+	protected bool $allowDynamicStepNavigation = true;
 
 	/**
 	 * {@inheritDoc}

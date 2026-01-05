@@ -21,11 +21,13 @@ class GetStepsEvent extends FormFlowEvent {
 	/**
 	 * @param StepInterface[] $steps
 	 */
-	public function setSteps(array $steps) {
+	public function setSteps(array $steps): void
+    {
 		$this->steps = $steps;
 	}
 
-	public function getSteps() {
+	public function getSteps(): array
+    {
 		return $this->steps;
 	}
 

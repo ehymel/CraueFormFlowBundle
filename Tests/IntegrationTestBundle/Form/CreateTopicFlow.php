@@ -12,7 +12,7 @@ use Craue\FormFlowBundle\Form\FormFlowInterface;
  */
 class CreateTopicFlow extends FormFlow {
 
-	protected $allowDynamicStepNavigation = true;
+	protected bool $allowDynamicStepNavigation = true;
 
 	/**
 	 * {@inheritDoc}

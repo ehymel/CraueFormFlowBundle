@@ -16,185 +16,129 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 interface FormFlowInterface {
 
-	/**
-	 * @return string
-	 */
-	function getName();
+	function getName(): string;
 
-	/**
-	 * @param FormFactoryInterface $formFactory
-	 */
 	function setFormFactory(FormFactoryInterface $formFactory);
 
-	/**
-	 * @param RequestStack $requestStack
-	 */
 	function setRequestStack(RequestStack $requestStack);
 
-	/**
-	 * @param DataManagerInterface $dataManager
-	 */
 	function setDataManager(DataManagerInterface $dataManager);
 
-	/**
-	 * @return DataManagerInterface
-	 */
-	function getDataManager();
+	function getDataManager(): DataManagerInterface;
 
-	/**
-	 * @param EventDispatcherInterface $eventDispatcher
-	 */
 	function setEventDispatcher(EventDispatcherInterface $eventDispatcher);
 
-	/**
-	 * @return bool
-	 */
-	function isRevalidatePreviousSteps();
+	function isRevalidatePreviousSteps(): bool;
+
+	function isAllowDynamicStepNavigation(): bool;
 
 	/**
-	 * @return bool
+	 * If file uploads should be handled by serializing them into the storage.
 	 */
-	function isAllowDynamicStepNavigation();
+	function isHandleFileUploads(): bool;
 
 	/**
-	 * @return bool If file uploads should be handled by serializing them into the storage.
+	 * Directory for storing temporary files while handling uploads. If <code>null</code>, the system's default will be used.
 	 */
-	function isHandleFileUploads();
+	function getHandleFileUploadsTempDir(): ?string;
 
-	/**
-	 * @return string|null Directory for storing temporary files while handling uploads. If <code>null</code>, the system's default will be used.
-	 */
-	function getHandleFileUploadsTempDir();
+	function isAllowRedirectAfterSubmit(): bool;
 
-	/**
-	 * @return bool
-	 */
-	function isAllowRedirectAfterSubmit();
+	function getId(): string;
 
-	/**
-	 * @return string
-	 */
-	function getId();
-
-	/**
-	 * @return string
-	 */
-	function getInstanceId();
+	function getInstanceId(): string;
 
 	/**
 	 * Restores previously saved form data of all steps and determines the current step.
-	 * @param mixed $formData
 	 */
-	function bind($formData);
+	function bind(mixed $formData);
 
-	/**
-	 * @return mixed
-	 */
-	function getFormData();
+	function getFormData(): mixed;
 
 	/**
 	 * Creates the form for the current step.
 	 * @return FormInterface
 	 */
-	function createForm();
+	function createForm(): FormInterface;
 
-	/**
-	 * @param int $stepNumber
-	 * @return bool
-	 */
-	function isStepDone($stepNumber);
+	function isStepDone(int $stepNumber): bool;
 
-	/**
-	 * @param int $stepNumber
-	 * @return bool
-	 */
-	function isStepSkipped($stepNumber);
+	function isStepSkipped(int $stepNumber): bool;
 
-	/**
-	 * @param FormInterface $form
-	 * @return bool Whether the form is valid.
-	 */
-	function isValid(FormInterface $form);
+	function isValid(FormInterface $form): bool;
 
 	/**
 	 * Saves the form data of the current step.
-	 * @param FormInterface $form
 	 */
-	function saveCurrentStepData(FormInterface $form);
+	function saveCurrentStepData(FormInterface $form): void;
 
 	/**
 	 * Proceeds to the next step.
 	 * @return bool Whether the next step can be prepared. If not, the flow is finished.
 	 */
-	function nextStep();
+	function nextStep(): bool;
 
 	/**
 	 * Resets the flow and clears its underlying storage.
 	 */
-	function reset();
+	function reset(): void;
 
 	/**
-	 * @return int First visible step, which may be greater than 1 if steps are skipped.
+	 * First visible step, which may be greater than 1 if steps are skipped.
 	 */
-	function getFirstStepNumber();
+	function getFirstStepNumber(): int;
 
 	/**
-	 * @return int Last visible step, which may be less than <code>getStepCount()</code> if steps are skipped.
+	 * Last visible step, which may be less than <code>getStepCount()</code> if steps are skipped.
 	 */
-	function getLastStepNumber();
+	function getLastStepNumber(): int;
 
 	/**
-	 * @return int
 	 * @throws \RuntimeException If the current step is not yet known.
 	 */
-	function getCurrentStepNumber();
+	function getCurrentStepNumber(): int;
 
 	/**
-	 * @return string|null The label for the current step.
+	 * The label for the current step.
 	 */
-	function getCurrentStepLabel();
+	function getCurrentStepLabel(): ?string;
 
 	/**
 	 * Get labels for all steps used to render the step list.
 	 * @return string[]|null[] Value with index 0 is the label for step 1.
 	 */
-	function getStepLabels();
+	function getStepLabels(): array;
 
 	/**
-	 * @param int $stepNumber
-	 * @return StepInterface
 	 * @throws InvalidTypeException If <code>$stepNumber</code> is not an integer.
 	 * @throws \OutOfBoundsException If step <code>$stepNumber</code> doesn't exist.
 	 */
-	function getStep($stepNumber);
+	function getStep(int $stepNumber): StepInterface;
 
 	/**
 	 * @return StepInterface[] Value with index 0 is step 1.
 	 */
-	function getSteps();
+	function getSteps(): array;
 
-	/**
-	 * @return int
-	 */
-	function getStepCount();
+	function getStepCount(): int;
 
 	/**
 	 * @return StepInterface[] Steps done.
 	 */
-	function getStepsDone();
+	function getStepsDone(): array;
 
 	/**
 	 * @return StepInterface[] Steps remaining.
 	 */
-	function getStepsRemaining();
+	function getStepsRemaining(): array;
 
 	/**
-	 * @return int Count of steps done.
+	 * Count of steps done.
 	 */
-	function getStepsDoneCount();
+	function getStepsDoneCount(): int;
 
 	/**
-	 * @return int Count of steps remaining.
+	 * Count of steps remaining.
 	 */
-	function getStepsRemainingCount();
+	function getStepsRemainingCount(): int;
 }

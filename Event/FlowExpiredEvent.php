@@ -14,25 +14,12 @@ use Symfony\Component\Form\FormInterface;
  */
 class FlowExpiredEvent extends FormFlowEvent {
 
-	/**
-	 * @var FormInterface
-	 */
-	protected $currentStepForm;
-
-	/**
-	 * @param FormFlowInterface $flow
-	 * @param FormInterface $currentStepForm
-	 */
-	public function __construct(FormFlowInterface $flow, FormInterface $currentStepForm) {
+	public function __construct(FormFlowInterface $flow, protected FormInterface $currentStepForm) {
 		parent::__construct($flow);
-		$this->currentStepForm = $currentStepForm;
 	}
 
-	/**
-	 * @return FormInterface
-	 */
-	public function getCurrentStepForm() {
+	public function getCurrentStepForm(): FormInterface
+    {
 		return $this->currentStepForm;
 	}
-
 }

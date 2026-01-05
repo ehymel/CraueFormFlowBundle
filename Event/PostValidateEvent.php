@@ -15,24 +15,14 @@ use Craue\FormFlowBundle\Form\FormFlowInterface;
 class PostValidateEvent extends FormFlowEvent {
 
 	/**
-	 * @var mixed
-	 */
-	protected $formData;
-
-	/**
 	 * @param FormFlowInterface $flow
 	 * @param mixed $formData
 	 */
-	public function __construct(FormFlowInterface $flow, $formData) {
+	public function __construct(FormFlowInterface $flow, protected mixed $formData) {
 		parent::__construct($flow);
-		$this->formData = $formData;
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getFormData() {
+	public function getFormData(): mixed {
 		return $this->formData;
 	}
-
 }

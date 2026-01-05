@@ -20,14 +20,11 @@ class FlowExpiredEventListener {
 		$event->getCurrentStepForm()->addError($this->getFlowExpiredFormError());
 	}
 
-	/**
-	 * @return FormError
-	 */
-	protected function getFlowExpiredFormError() {
+	protected function getFlowExpiredFormError(): FormError
+    {
 		$messageId = 'craueFormFlow.flowExpired';
 		$messageParameters = [];
 
 		return new FormError($this->translator->trans($messageId, $messageParameters, 'validators'), $messageId, $messageParameters);
 	}
-
 }

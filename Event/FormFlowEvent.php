@@ -13,22 +13,13 @@ use Symfony\Contracts\EventDispatcher\Event;
 abstract class FormFlowEvent extends Event {
 
 	/**
-	 * @var FormFlowInterface
-	 */
-	protected $flow;
-
-	/**
 	 * @param FormFlowInterface $flow
 	 */
-	public function __construct(FormFlowInterface $flow) {
-		$this->flow = $flow;
-	}
+	public function __construct(protected FormFlowInterface $flow)
+    {}
 
-	/**
-	 * @return FormFlowInterface
-	 */
-	public function getFlow() {
+	public function getFlow(): FormFlowInterface
+    {
 		return $this->flow;
 	}
-
 }

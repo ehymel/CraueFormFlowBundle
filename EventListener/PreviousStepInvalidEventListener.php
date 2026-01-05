@@ -16,19 +16,16 @@ class PreviousStepInvalidEventListener {
 
 	use EventListenerWithTranslatorTrait;
 
-	public function onPreviousStepInvalid(PreviousStepInvalidEvent $event) {
+	public function onPreviousStepInvalid(PreviousStepInvalidEvent $event): void
+    {
 		$event->getCurrentStepForm()->addError($this->getPreviousStepInvalidFormError($event->getInvalidStepNumber()));
 	}
 
-	/**
-	 * @param int $stepNumber
-	 * @return FormError
-	 */
-	protected function getPreviousStepInvalidFormError($stepNumber) {
+	protected function getPreviousStepInvalidFormError(int $stepNumber): FormError
+    {
 		$messageId = 'craueFormFlow.previousStepInvalid';
 		$messageParameters = ['%stepNumber%' => $stepNumber];
 
 		return new FormError($this->translator->trans($messageId, $messageParameters, 'validators'), $messageId, $messageParameters);
 	}
-
 }

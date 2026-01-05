@@ -13,16 +13,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 trait EventListenerWithTranslatorTrait {
 
-	/**
-	 * @var TranslatorInterface
-	 */
-	protected $translator;
+	protected TranslatorInterface $translator;
 
 	/**
 	 * @param TranslatorInterface $translator
 	 */
-	public function setTranslator(TranslatorInterface $translator) {
+	public function setTranslator(TranslatorInterface $translator): void
+    {
 		$this->translator = $translator;
 	}
-
 }

@@ -15,38 +15,21 @@ use Craue\FormFlowBundle\Form\FormFlowInterface;
 class PostBindSavedDataEvent extends FormFlowEvent {
 
 	/**
-	 * @var mixed
-	 */
-	protected $formData;
-
-	/**
-	 * @var int
-	 */
-	protected $stepNumber;
-
-	/**
 	 * @param FormFlowInterface $flow
 	 * @param mixed $formData
 	 * @param int $stepNumber
 	 */
-	public function __construct(FormFlowInterface $flow, $formData, $stepNumber) {
+	public function __construct(FormFlowInterface $flow, protected mixed $formData, protected int $stepNumber) {
 		parent::__construct($flow);
-		$this->formData = $formData;
-		$this->stepNumber = $stepNumber;
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getFormData() {
+	public function getFormData(): mixed
+    {
 		return $this->formData;
 	}
 
-	/**
-	 * @return int
-	 */
-	public function getStepNumber() {
+	public function getStepNumber(): int
+    {
 		return $this->stepNumber;
 	}
-
 }

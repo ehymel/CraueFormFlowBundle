@@ -21,7 +21,8 @@ class InvalidTypeException extends \InvalidArgumentException {
 		parent::__construct($message);
 	}
 
-	protected function conjunctTypes(array $expectedTypes) {
+	protected function conjunctTypes(array $expectedTypes): string
+    {
 		$expectedTypes = array_values($expectedTypes);
 
 		$len = count($expectedTypes);

@@ -13,11 +13,8 @@ abstract class StringUtil {
 
 	private function __construct() {}
 
-	/**
-	 * @param int $length
-	 * @return string
-	 */
-	public static function generateRandomString($length) {
+	public static function generateRandomString(int $length): string
+    {
 		if (!is_int($length)) {
 			throw new InvalidTypeException($length, 'int');
 		}
@@ -29,12 +26,8 @@ abstract class StringUtil {
 		return substr(rtrim(strtr(base64_encode(random_bytes($length)), '+/', '-_'), '='), 0, $length);
 	}
 
-	/**
-	 * @param string $input
-	 * @param int $length
-	 * @return bool
-	 */
-	public static function isRandomString($input, $length) {
+	public static function isRandomString(string $input, int $length): bool
+    {
 		if (!is_string($input)) {
 			throw new InvalidTypeException($input, 'string');
 		}
@@ -54,11 +47,8 @@ abstract class StringUtil {
 	 * @param string $fqcn FQCN
 	 * @return string|null flow name or null if not a FQCN
 	 */
-	public static function fqcnToFlowName($fqcn) {
-		if (!is_string($fqcn)) {
-			throw new InvalidTypeException($fqcn, 'string');
-		}
-
+	public static function fqcnToFlowName(string $fqcn): ?string
+    {
 		if (preg_match('/([^\\\\]+?)(flow)?$/i', $fqcn, $matches)) {
 			return lcfirst(preg_replace('/([A-Z]+)([A-Z][a-z])/', '\\1\\2', $matches[1]));
 		}

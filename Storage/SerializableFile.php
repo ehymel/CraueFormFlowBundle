@@ -16,14 +16,14 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class SerializableFile {
 
 	/**
-	 * @var string Base64-encoded content of the original file.
+	 * Base64-encoded content of the original file.
 	 */
-	protected $content;
+	protected string $content;
 
 	/**
-	 * @var string FQCN of the object encapsulating the original file. Not used yet, but meant for possible future support of further types.
+	 * FQCN of the object encapsulating the original file. Not used yet, but meant for possible future support of further types.
 	 */
-	protected $type;
+	protected string $type;
 
 	protected $clientOriginalName;
 	protected $clientMimeType;
@@ -32,7 +32,7 @@ class SerializableFile {
 	 * @param mixed $file An object meant to be serialized.
 	 * @throws InvalidTypeException If the type of <code>$file</code> is unsupported.
 	 */
-	public function __construct($file) {
+	public function __construct(mixed $file) {
 		if (!self::isSupported($file)) {
 			throw new InvalidTypeException($file, UploadedFile::class);
 		}
@@ -48,7 +48,8 @@ class SerializableFile {
 	 * @param string|null $tempDir Directory for storing temporary files. If <code>null</code>, the system's default will be used.
 	 * @return mixed The unserialized object.
 	 */
-	public function getAsFile($tempDir = null) {
+	public function getAsFile(?string $tempDir = null): mixed
+    {
 		if ($tempDir === null) {
 			$tempDir = sys_get_temp_dir();
 		}
@@ -62,11 +63,8 @@ class SerializableFile {
 		return new UploadedFile($tempFile, $this->clientOriginalName, $this->clientMimeType, null, true);
 	}
 
-	/**
-	 * @param mixed $file
-	 * @return bool
-	 */
-	public static function isSupported($file) {
+	public static function isSupported(mixed $file): bool
+    {
 		return $file instanceof UploadedFile;
 	}
 

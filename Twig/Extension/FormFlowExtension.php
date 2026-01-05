@@ -17,19 +17,18 @@ use Twig\TwigFunction;
  */
 class FormFlowExtension extends AbstractExtension {
 
-	/**
-	 * @var FormFlowUtil
-	 */
-	protected $formFlowUtil;
+	protected FormFlowUtil $formFlowUtil;
 
-	public function setFormFlowUtil(FormFlowUtil $formFlowUtil) {
+	public function setFormFlowUtil(FormFlowUtil $formFlowUtil): void
+    {
 		$this->formFlowUtil = $formFlowUtil;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getName() {
+	public function getName(): string
+    {
 		return 'craue_formflow';
 	}
 
@@ -62,7 +61,8 @@ class FormFlowExtension extends AbstractExtension {
 	 * @param int $stepNumber Number of the step the link will be generated for.
 	 * @return array Route parameters plus instance and step parameter.
 	 */
-	public function addDynamicStepNavigationParameters(array $parameters, FormFlow $flow, $stepNumber) {
+	public function addDynamicStepNavigationParameters(array $parameters, FormFlow $flow, $stepNumber): array
+    {
 		return $this->formFlowUtil->addRouteParameters($parameters, $flow, $stepNumber);
 	}
 
@@ -72,7 +72,8 @@ class FormFlowExtension extends AbstractExtension {
 	 * @param FormFlow $flow The flow involved.
 	 * @return array Route parameters without instance and step parameter.
 	 */
-	public function removeDynamicStepNavigationParameters(array $parameters, FormFlow $flow) {
+	public function removeDynamicStepNavigationParameters(array $parameters, FormFlow $flow): array
+    {
 		return $this->formFlowUtil->removeRouteParameters($parameters, $flow);
 	}
 
@@ -81,7 +82,8 @@ class FormFlowExtension extends AbstractExtension {
 	 * @param int $stepNumber Number of the step the link will be generated for.
 	 * @return bool If the step can be linked to.
 	 */
-	public function isStepLinkable(FormFlow $flow, $stepNumber) {
+	public function isStepLinkable(FormFlow $flow, int $stepNumber): bool
+    {
 		if (!$flow->isAllowDynamicStepNavigation()
 				|| $flow->getCurrentStepNumber() === $stepNumber
 				|| $flow->isStepSkipped($stepNumber)) {
@@ -108,12 +110,14 @@ class FormFlowExtension extends AbstractExtension {
 
 	// methods for BC with third-party templates (e.g. MopaBootstrapBundle)
 
-	public function addDynamicStepNavigationParameter(array $parameters, FormFlow $flow, $stepNumber) {
+	public function addDynamicStepNavigationParameter(array $parameters, FormFlow $flow, $stepNumber): array
+    {
 		@trigger_error('Twig filter craue_addDynamicStepNavigationParameter is deprecated since CraueFormFlowBundle 3.0. Use filter craue_addDynamicStepNavigationParameters instead.', E_USER_DEPRECATED);
 		return $this->addDynamicStepNavigationParameters($parameters, $flow, $stepNumber);
 	}
 
-	public function removeDynamicStepNavigationParameter(array $parameters, FormFlow $flow) {
+	public function removeDynamicStepNavigationParameter(array $parameters, FormFlow $flow): array
+    {
 		@trigger_error('Twig filter craue_removeDynamicStepNavigationParameter is deprecated since CraueFormFlowBundle 3.0. Use filter craue_removeDynamicStepNavigationParameters instead.', E_USER_DEPRECATED);
 		return $this->removeDynamicStepNavigationParameters($parameters, $flow);
 	}

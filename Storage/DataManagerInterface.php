@@ -12,14 +12,11 @@ use Craue\FormFlowBundle\Form\FormFlowInterface;
 interface DataManagerInterface {
 
 	/**
-	 * @var string Key for storing data of all flows.
+	 * Key for storing data of all flows.
 	 */
-	const STORAGE_ROOT = 'craue_form_flow';
+	const string STORAGE_ROOT = 'craue_form_flow';
 
-	/**
-	 * @return StorageInterface
-	 */
-	function getStorage();
+	function getStorage(): StorageInterface;
 
 	/**
 	 * Saves data of the given flow.
@@ -30,21 +27,16 @@ interface DataManagerInterface {
 
 	/**
 	 * Checks if data exists for a given flow.
-	 * @param FormFlowInterface $flow
-	 * @return bool
 	 */
-	function exists(FormFlowInterface $flow);
+	function exists(FormFlowInterface $flow): bool;
 
 	/**
 	 * Loads data of the given flow.
-	 * @param FormFlowInterface $flow
-	 * @return array
 	 */
-	function load(FormFlowInterface $flow);
+	function load(FormFlowInterface $flow): array;
 
 	/**
 	 * Drops data of the given flow.
-	 * @param FormFlowInterface $flow
 	 */
 	function drop(FormFlowInterface $flow);
 

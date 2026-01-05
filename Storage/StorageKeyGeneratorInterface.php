@@ -15,6 +15,6 @@ interface StorageKeyGeneratorInterface {
 	 * @param string $key
 	 * @return string
 	 */
-	function generate($key);
+	function generate(string $key): string;
 
 }

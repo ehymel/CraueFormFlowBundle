@@ -23,14 +23,14 @@ class UserSessionStorageKeyGenerator implements StorageKeyGeneratorInterface {
 	/**
 	 * @var TokenStorageInterface
 	 */
-	private $tokenStorage;
+	private TokenStorageInterface $tokenStorage;
 
 	/**
 	 * @param TokenStorageInterface $tokenStorage
 	 * @param RequestStack|SessionInterface $requestStackOrSession
 	 * @throws InvalidTypeException
 	 */
-	public function __construct(TokenStorageInterface $tokenStorage, $requestStackOrSession) {
+	public function __construct(TokenStorageInterface $tokenStorage, RequestStack|SessionInterface $requestStackOrSession) {
 		$this->tokenStorage = $tokenStorage;
 		$this->setRequestStackOrSession($requestStackOrSession);
 	}
@@ -38,11 +38,8 @@ class UserSessionStorageKeyGenerator implements StorageKeyGeneratorInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function generate($key) {
-		if (!is_string($key)) {
-			throw new InvalidTypeException($key, 'string');
-		}
-
+	public function generate(string $key): string
+    {
 		if ($key === '') {
 			throw new \InvalidArgumentException('Argument must not be empty.');
 		}

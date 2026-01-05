@@ -27,31 +27,27 @@ class DataManager implements ExtendedDataManagerInterface {
 	/**
 	 * @var string Key for the actual step data.
 	 */
-	const DATA_KEY = 'data';
-
-	/**
-	 * @var StorageInterface
-	 */
-	private $storage;
+	const string DATA_KEY = 'data';
 
 	/**
 	 * @param StorageInterface $storage
 	 */
-	public function __construct(StorageInterface $storage) {
-		$this->storage = $storage;
+	public function __construct(private StorageInterface $storage) {
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getStorage() {
+	public function getStorage(): StorageInterface
+    {
 		return $this->storage;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function save(FormFlowInterface $flow, array $data) {
+	public function save(FormFlowInterface $flow, array $data): void
+    {
 		// handle file uploads
 		if ($flow->isHandleFileUploads()) {
 			array_walk_recursive($data, function(&$value, $key) {
@@ -81,7 +77,7 @@ class DataManager implements ExtendedDataManagerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function load(FormFlowInterface $flow) {
+	public function load(FormFlowInterface $flow): array {
 		$data = [];
 
 		// try to find data for the given flow
@@ -106,7 +102,8 @@ class DataManager implements ExtendedDataManagerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function exists(FormFlowInterface $flow) {
+	public function exists(FormFlowInterface $flow): bool
+    {
 		$savedFlows = $this->storage->get(DataManagerInterface::STORAGE_ROOT, []);
 		return isset($savedFlows[$flow->getName()][$flow->getInstanceId()][self::DATA_KEY]);
 	}
@@ -114,7 +111,8 @@ class DataManager implements ExtendedDataManagerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function drop(FormFlowInterface $flow) {
+	public function drop(FormFlowInterface $flow): void
+    {
 		$savedFlows = $this->storage->get(DataManagerInterface::STORAGE_ROOT, []);
 
 		// remove data for only this flow instance
@@ -126,14 +124,16 @@ class DataManager implements ExtendedDataManagerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function listFlows() {
+	public function listFlows(): array
+    {
 		return array_keys($this->storage->get(DataManagerInterface::STORAGE_ROOT, []));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function listInstances($name) {
+	public function listInstances($name): array
+    {
 		$savedFlows = $this->storage->get(DataManagerInterface::STORAGE_ROOT, []);
 
 		if (array_key_exists($name, $savedFlows)) {
@@ -146,7 +146,8 @@ class DataManager implements ExtendedDataManagerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function dropAll() {
+	public function dropAll(): void
+    {
 		$this->storage->remove(DataManagerInterface::STORAGE_ROOT);
 	}
 

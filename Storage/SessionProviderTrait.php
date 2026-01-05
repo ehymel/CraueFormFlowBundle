@@ -18,18 +18,18 @@ trait SessionProviderTrait {
 	/**
 	 * @var RequestStack|null
 	 */
-	private $requestStack;
+	private ?RequestStack $requestStack;
 
 	/**
 	 * @var SessionInterface|null
 	 */
-	private $session;
+	private ?SessionInterface $session;
 
 	/**
 	 * @param RequestStack|SessionInterface $requestStackOrSession
 	 * @throws InvalidTypeException
 	 */
-	private function setRequestStackOrSession($requestStackOrSession) : void {
+	private function setRequestStackOrSession(RequestStack|SessionInterface $requestStackOrSession): void {
 		// TODO accept only RequestStack as soon as Symfony >= 6.0 is required
 
 		if ($requestStackOrSession instanceof SessionInterface) {
@@ -47,7 +47,7 @@ trait SessionProviderTrait {
 		throw new InvalidTypeException($requestStackOrSession, [RequestStack::class, SessionInterface::class]);
 	}
 
-	private function getSession() : SessionInterface {
+	private function getSession(): SessionInterface {
 		if ($this->requestStack !== null) {
 			return $this->requestStack->getSession();
 		}

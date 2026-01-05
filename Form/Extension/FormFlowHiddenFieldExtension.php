@@ -16,25 +16,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FormFlowHiddenFieldExtension extends AbstractTypeExtension {
 
-	/**
-	 * @return string
-	 */
-	public function getExtendedType() {
+	public function getExtendedType(): string
+    {
 		return HiddenType::class;
 	}
 
-	public static function getExtendedTypes() : iterable {
+	public static function getExtendedTypes(): iterable {
 		return [HiddenType::class];
 	}
 
-	public function configureOptions(OptionsResolver $resolver) : void {
+	public function configureOptions(OptionsResolver $resolver): void {
 		$resolver->setDefined([
 			'flow_instance_key',
 			'flow_step_key',
 		]);
 	}
 
-	public function finishView(FormView $view, FormInterface $form, array $options) : void {
+	public function finishView(FormView $view, FormInterface $form, array $options): void {
 		if (array_key_exists('flow_instance_key', $options) && $view->vars['name'] === $options['flow_instance_key']) {
 			$view->vars['value'] = $options['data'];
 			$view->vars['full_name'] = $options['flow_instance_key'];

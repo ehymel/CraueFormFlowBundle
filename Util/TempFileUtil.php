@@ -11,21 +11,23 @@ namespace Craue\FormFlowBundle\Util;
  */
 abstract class TempFileUtil {
 
-	private static $tempFiles = [];
+	private static array $tempFiles = [];
 
 	private function __construct() {}
 
 	/**
-	 * @param string $tempFile Path to a file.
+	 * Path to a file.
 	 */
-	public static function addTempFile($tempFile) {
+	public static function addTempFile(string $tempFile): void
+    {
 		self::$tempFiles[] = $tempFile;
 	}
 
 	/**
 	 * Removes all previously added files from disk.
 	 */
-	public static function removeTempFiles() {
+	public static function removeTempFiles(): void
+    {
 		foreach (self::$tempFiles as $tempFile) {
 			if (is_file($tempFile)) {
 				@unlink($tempFile);

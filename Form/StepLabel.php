@@ -13,33 +13,27 @@ use Craue\FormFlowBundle\Exception\StepLabelCallableInvalidReturnValueException;
 class StepLabel {
 
 	/**
-	 * @var bool If <code>$value</code> is callable.
+	 * If <code>$value</code> is callable.
 	 */
-	private $callable;
+	private bool $callable;
 
 	/**
 	 * @var string|callable|null
 	 */
 	private $value = null;
 
-	/**
-	 * @param string|null $value
-	 */
-	public static function createStringLabel($value) {
+	public static function createStringLabel(?string $value): static
+    {
 		return new static($value);
 	}
 
-	/**
-	 * @param callable $value
-	 */
-	public static function createCallableLabel($value) {
+	public static function createCallableLabel(callable $value): static
+    {
 		return new static($value, true);
 	}
 
-	/**
-	 * @return string|null
-	 */
-	public function getText() {
+	public function getText(): callable|string|null
+    {
 		if ($this->callable) {
 			$returnValue = call_user_func($this->value);
 
@@ -53,19 +47,12 @@ class StepLabel {
 		return $this->value;
 	}
 
-	/**
-	 * @param string|callable|null $value
-	 * @param bool $callable
-	 */
-	private final function __construct($value, $callable = false) {
+	private final function __construct(callable|string|null $value, bool $callable = false) {
 		$this->setValue($value, $callable);
 	}
 
-	/**
-	 * @param string|callable|null $value
-	 * @param bool $callable
-	 */
-	private function setValue($value, $callable = false) {
+	private function setValue(callable|string|null $value, bool $callable = false): void
+    {
 		if ($callable) {
 			if (!is_callable($value)) {
 				throw new InvalidTypeException($value, ['callable']);

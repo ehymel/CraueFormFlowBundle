@@ -11,35 +11,16 @@ use Symfony\Component\Form\FormTypeInterface;
  */
 interface StepInterface {
 
-	/**
-	 * @return int
-	 */
-	function getNumber();
+	function getNumber(): int;
 
-	/**
-	 * @return string|null
-	 */
-	function getLabel();
+	function getLabel(): ?string;
 
-	/**
-	 * @return FormTypeInterface|string|null
-	 */
-	function getFormType();
+	function getFormType(): FormTypeInterface|string|null;
 
-	/**
-	 * @return array
-	 */
-	function getFormOptions();
+	function getFormOptions(): array;
 
-	/**
-	 * @return bool
-	 */
-	function isSkipped();
+	function isSkipped(): bool;
 
-	/**
-	 * @param int $estimatedCurrentStepNumber
-	 * @param FormFlowInterface $flow
-	 */
-	function evaluateSkipping($estimatedCurrentStepNumber, FormFlowInterface $flow);
+	function evaluateSkipping(int $estimatedCurrentStepNumber, FormFlowInterface $flow);
 
 }

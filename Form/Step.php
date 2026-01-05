@@ -100,7 +100,7 @@ class Step implements StepInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getLabel(): callable|string|null
+	public function getLabel(): ?string
     {
 		try {
 			return $this->label !== null ? $this->label->getText() : null;
@@ -177,7 +177,7 @@ class Step implements StepInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function evaluateSkipping($estimatedCurrentStepNumber, FormFlowInterface $flow): void
+	public function evaluateSkipping(int $estimatedCurrentStepNumber, FormFlowInterface $flow): void
     {
 		if ($this->skipFunction !== null) {
 			$returnValue = ($this->skipFunction)(...[$estimatedCurrentStepNumber, $flow]);

@@ -14,27 +14,24 @@ interface StorageInterface {
 	 * @param string $key
 	 * @param mixed $value
 	 */
-	function set($key, $value);
+	function set(string $key, mixed $value);
 
 	/**
 	 * Retrieve the data stored under the given key.
-	 * @param string $key
-	 * @param mixed $default
-	 * @return mixed
 	 */
-	function get($key, $default = null);
+	function get(string $key, mixed $default = null): mixed;
 
 	/**
 	 * Checks if data is stored for the given key.
 	 * @param string $key
 	 * @return bool
 	 */
-	function has($key);
+	function has(string $key): bool;
 
 	/**
 	 * Delete the stored data of the given key.
 	 * @param string $key
 	 */
-	function remove($key);
+	function remove(string $key);
 
 }

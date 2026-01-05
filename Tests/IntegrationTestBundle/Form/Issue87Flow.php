@@ -16,7 +16,8 @@ class Issue87Flow extends FormFlow {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function loadStepsConfig() {
+	protected function loadStepsConfig(): array
+    {
 		return [
 			[
 				'label' => 'step1',

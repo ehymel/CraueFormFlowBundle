@@ -18,34 +18,19 @@ use Doctrine\DBAL\Types\Types;
  */
 class DoctrineStorage implements StorageInterface {
 
-	const TABLE = 'craue_form_flow_storage';
-	const KEY_COLUMN = 'key';
-	const VALUE_COLUMN = 'value';
+	const string TABLE = 'craue_form_flow_storage';
+	const string KEY_COLUMN = 'key';
+	const string VALUE_COLUMN = 'value';
 
-	/**
-	 * @var Connection
-	 */
-	private $conn;
+	private Connection $conn;
 
-	/**
-	 * @var StorageKeyGeneratorInterface
-	 */
-	private $storageKeyGenerator;
+	private StorageKeyGeneratorInterface $storageKeyGenerator;
 
-	/**
-	 * @var AbstractSchemaManager
-	 */
-	private $schemaManager;
+	private AbstractSchemaManager $schemaManager;
 
-	/**
-	 * @var string
-	 */
-	private $keyColumn;
+	private string $keyColumn;
 
-	/**
-	 * @var string
-	 */
-	private $valueColumn;
+	private string $valueColumn;
 
 	public function __construct(Connection $conn, StorageKeyGeneratorInterface $storageKeyGenerator) {
 		$this->conn = $conn;
@@ -59,7 +44,8 @@ class DoctrineStorage implements StorageInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function set($key, $value) {
+	public function set($key, $value): void
+    {
 		if (!$this->tableExists()) {
 			$this->createTable();
 		}
@@ -83,7 +69,7 @@ class DoctrineStorage implements StorageInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get($key, $default = null) {
+	public function get($key, ?mixed $default = null) {
 		if (!$this->tableExists()) {
 			return $default;
 		}
@@ -100,7 +86,8 @@ class DoctrineStorage implements StorageInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function has($key) {
+	public function has($key): bool
+    {
 		if (!$this->tableExists()) {
 			return false;
 		}
@@ -111,7 +98,8 @@ class DoctrineStorage implements StorageInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function remove($key) {
+	public function remove($key): void
+    {
 		if (!$this->tableExists()) {
 			return;
 		}
@@ -126,7 +114,8 @@ class DoctrineStorage implements StorageInterface {
 	 * @param string $key
 	 * @return string|false Raw data or false, if no data is available.
 	 */
-	private function getRawValueForKey($key) {
+	private function getRawValueForKey($key): false|string
+    {
 		$qb = $this->conn->createQueryBuilder()
 			->select($this->valueColumn)
 			->from(self::TABLE)
@@ -149,7 +138,8 @@ class DoctrineStorage implements StorageInterface {
 		return $this->schemaManager->tablesExist([self::TABLE]);
 	}
 
-	private function createTable() {
+	private function createTable(): void
+    {
 		$table = new Table(self::TABLE, [
 			new Column($this->keyColumn, Type::getType(Types::STRING), ['length' => 255]),
 			new Column($this->valueColumn, Type::getType(Types::TEXT)),
@@ -159,7 +149,8 @@ class DoctrineStorage implements StorageInterface {
 		$this->schemaManager->createTable($table);
 	}
 
-	private function generateKey($key) {
+	private function generateKey($key): string
+    {
 		return $this->storageKeyGenerator->generate($key);
 	}
 

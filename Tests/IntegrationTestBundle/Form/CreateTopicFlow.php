@@ -17,7 +17,8 @@ class CreateTopicFlow extends FormFlow {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function loadStepsConfig() {
+	protected function loadStepsConfig(): array
+    {
 		$formType = CreateTopicForm::class;
 
 		return [

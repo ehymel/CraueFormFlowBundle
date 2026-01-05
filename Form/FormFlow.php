@@ -794,7 +794,7 @@ abstract class FormFlow implements FormFlowInterface {
 		return $form;
 	}
 
-	public function getFormOptions($step, array $options = []) {
+	public function getFormOptions(int $step, array $options = []) {
 		// override options in a specific order
 		$options = array_merge(
 			$this->getGenericFormOptions(),
@@ -846,7 +846,7 @@ abstract class FormFlow implements FormFlowInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getSteps(): ?array
+	public function getSteps(): array
     {
 		// The steps have been loaded already.
 		if ($this->steps !== null) {
@@ -1116,7 +1116,7 @@ abstract class FormFlow implements FormFlowInterface {
 		return $this->getLastStepNumber();
 	}
 
-	public function hasSkipStep($stepNumber): bool
+	public function hasSkipStep(int $stepNumber): bool
     {
 		@trigger_error('Method ' . __METHOD__ . ' is deprecated since CraueFormFlowBundle 2.0. Use method isStepSkipped instead.', E_USER_DEPRECATED);
 		return $this->isStepSkipped($stepNumber);

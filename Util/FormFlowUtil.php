@@ -18,7 +18,8 @@ class FormFlowUtil {
 	 * @param int|null $stepNumber Number of the step the link will be generated for. If <code>null</code>, the <code>$flow</code>'s current step number will be used.
 	 * @return array Route parameters plus instance and step parameter.
 	 */
-	public function addRouteParameters(array $parameters, FormFlow $flow, $stepNumber = null) {
+	public function addRouteParameters(array $parameters, FormFlow $flow, ?int $stepNumber = null): array
+    {
 		if ($stepNumber === null) {
 			$stepNumber = $flow->getCurrentStepNumber();
 		}
@@ -35,7 +36,8 @@ class FormFlowUtil {
 	 * @param FormFlow $flow The flow involved.
 	 * @return array Route parameters without instance and step parameter.
 	 */
-	public function removeRouteParameters(array $parameters, FormFlow $flow) {
+	public function removeRouteParameters(array $parameters, FormFlow $flow): array
+    {
 		unset($parameters[$flow->getDynamicStepNavigationInstanceParameter()]);
 		unset($parameters[$flow->getDynamicStepNavigationStepParameter()]);
 

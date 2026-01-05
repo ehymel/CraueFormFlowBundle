@@ -21,35 +21,39 @@ class SessionStorage implements StorageInterface {
 	 * @param RequestStack|SessionInterface $requestStackOrSession
 	 * @throws InvalidTypeException
 	 */
-	public function __construct($requestStackOrSession) {
+	public function __construct(RequestStack|SessionInterface $requestStackOrSession) {
 		$this->setRequestStackOrSession($requestStackOrSession);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function set($key, $value) {
+	public function set(string $key, mixed $value): void
+    {
 		$this->getSession()->set($key, $value);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get($key, $default = null) {
+	public function get($key, mixed $default = null): mixed
+    {
 		return $this->getSession()->get($key, $default);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function has($key) {
+	public function has($key): bool
+    {
 		return $this->getSession()->has($key);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function remove($key) {
+	public function remove($key): void
+    {
 		$this->getSession()->remove($key);
 	}
 

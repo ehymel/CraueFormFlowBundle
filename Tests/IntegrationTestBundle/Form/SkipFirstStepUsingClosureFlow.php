@@ -17,7 +17,8 @@ class SkipFirstStepUsingClosureFlow extends FormFlow {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function loadStepsConfig() {
+	protected function loadStepsConfig(): array
+    {
 		return [
 			[
 				'label' => 'step1',
